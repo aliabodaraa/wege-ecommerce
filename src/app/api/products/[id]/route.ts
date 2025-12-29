@@ -12,6 +12,10 @@ export async function GET(
   if (!product) {
     return NextResponse.json({ error: "Product not found" }, { status: 404 });
   }
-
-  return NextResponse.json(product);
+  const headers = new Headers({
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  });
+  return NextResponse.json(product, { headers });
 }

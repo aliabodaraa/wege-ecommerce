@@ -5,25 +5,36 @@ import Link from "next/link";
 import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { homePath } from "@/paths";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CartStore, useCartStore } from "@/lib/store/cartStore";
 import CartSidebar from "@/features/cart/components/CartSidebar";
-
+import Search from "@/features/product/components/Search";
+import { Suspense } from "react";
 const Header = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
   const totalItems = useCartStore((state: CartStore) => state.getTotalItems());
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const navItems = (
     <>
+      <Suspense>
+        <Search />
+      </Suspense>
       <Button
         aria-label="Open cart"
         variant="outline"
         size="icon"
         onClick={() => setIsCartOpen(true)}
+        className="relative"
       >
         <ShoppingCart className="w-6 h-6" />
-        {totalItems > 0 && (
-          <span className="absolute top-1 right-3 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+        {isMounted && totalItems > 0 && (
+          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
             {totalItems}
           </span>
         )}
@@ -48,7 +59,7 @@ const Header = () => {
             className={buttonVariants({ variant: "ghost" })}
           >
             <LucideKanban />
-            <h1 className="text-lg font-semibold">TicketBounty</h1>
+            <h1 className="text-lg font-semibold">E-commerce Wege</h1>
           </Link>
         </div>
         <div className="flex align-items gap-x-2">

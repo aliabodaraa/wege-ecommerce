@@ -3,40 +3,31 @@
 import { Search as SearchIcon, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect, useCallback } from "react";
-import { useDebounce } from "@/hooks/useDebounce";
+import { useProductFilters } from "@/hooks/useProductFilters";
+import { useEffect, useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
 
 export default function Search() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [searchTerm, setSearchTerm] = useState(
-    searchParams.get("search") || ""
-  );
-  const debouncedSearch = useDebounce(searchTerm, 500);
+  const { filters, updateSearch } = useProductFilters();
+  const [inputValue, setInputValue] = useState(filters.search || "");
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      if (value) {
-        params.set(name, value);
-      } else {
-        params.delete(name);
-      }
-      return params.toString();
-    },
-    [searchParams]
-  );
+  const debouncedUpdateSearch = useDebouncedCallback((value: string) => {
+    updateSearch(value);
+  });
+
+  const handleInputChange = (value: string) => {
+    setInputValue(value);
+    debouncedUpdateSearch(value);
+  };
 
   useEffect(() => {
-    if (debouncedSearch !== undefined) {
-      router.push(`/?${createQueryString("search", debouncedSearch)}`);
-    }
-  }, [debouncedSearch, createQueryString, router]);
+    setInputValue(filters.search || "");
+  }, [filters.search]);
 
   const clearSearch = () => {
-    setSearchTerm("");
-    router.push("/");
+    setInputValue("");
+    updateSearch("");
+    debouncedUpdateSearch.cancel();
   };
 
   return (
@@ -46,11 +37,11 @@ export default function Search() {
         type="search"
         placeholder="Search products..."
         className="pl-10 pr-10"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        value={inputValue}
+        onChange={(e) => handleInputChange(e.target.value)}
         aria-label="Search products"
       />
-      {searchTerm && (
+      {inputValue && (
         <Button
           variant="ghost"
           size="icon"

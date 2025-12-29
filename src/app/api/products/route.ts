@@ -41,6 +41,10 @@ export async function GET(request: Request) {
         product.category.toLowerCase().includes(searchLower)
     );
   }
-
-  return NextResponse.json(filteredProducts);
+  const headers = new Headers({
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  });
+  return NextResponse.json(filteredProducts, { headers });
 }
