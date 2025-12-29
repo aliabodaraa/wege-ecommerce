@@ -11,6 +11,7 @@ import { Product } from "@/lib/types/product";
 import { ProductImage } from "./ui/ProductImage";
 import { categoryPath, homePath } from "@/paths";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import QuantityControls from "@/features/cart/components/QuantityControls";
 
 interface ProductDetailsProps {
   product: Product;
@@ -103,25 +104,13 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
             <div className="flex items-center gap-4 mb-6">
               <div className="flex items-center gap-2">
                 <span className="font-medium">Quantity:</span>
-                <div className="flex items-center border rounded-lg">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  >
-                    -
-                  </Button>
-                  <span className="w-12 text-center font-medium">
-                    {quantity}
-                  </span>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setQuantity(quantity + 1)}
-                  >
-                    +
-                  </Button>
-                </div>
+
+                <QuantityControls
+                  btnVariant="outline"
+                  quantity={quantity}
+                  onMinusClick={() => setQuantity(Math.max(1, quantity - 1))}
+                  onPlusClick={() => setQuantity(quantity + 1)}
+                />
               </div>
             </div>
 

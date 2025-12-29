@@ -15,6 +15,8 @@ import {
   SheetFooter,
 } from "@/components/ui/sheet";
 import { Card, CardContent } from "@/components/ui/card";
+import { ProductImage } from "@/features/product/components/ui/ProductImage";
+import QuantityControls from "./QuantityControls";
 
 interface CartSidebarProps {
   isOpen: boolean;
@@ -73,13 +75,12 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                   <Card key={item.id} className="overflow-hidden">
                     <CardContent className="p-4">
                       <div className="flex gap-4">
-                        {/* Product Image */}
-                        <div className="flex-shrink-0">
-                          <div className="h-20 w-20 rounded-md bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center">
-                            <span className="text-xs text-muted-foreground">
-                              Image
-                            </span>
-                          </div>
+                        <div className="flex-shrink-0flex-shrink-0 w-24 h-24">
+                          <ProductImage
+                            src={item.image}
+                            alt={item.title}
+                            className={`w-10 h-10 object-cover group-hover:scale-105 transition-transform duration-300`}
+                          />
                         </div>
 
                         {/* Product Details */}
@@ -108,33 +109,16 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                               ${item.price.toFixed(2)}
                             </p>
 
-                            {/* Quantity Controls */}
-                            <div className="flex items-center gap-2">
-                              <Button
-                                variant="outline"
-                                size="icon"
-                                className="h-8 w-8"
-                                onClick={() =>
-                                  updateQuantity(item.id, item.quantity - 1)
-                                }
-                                disabled={item.quantity <= 1}
-                              >
-                                <Minus className="h-3 w-3" />
-                              </Button>
-                              <span className="w-8 text-center font-medium">
-                                {item.quantity}
-                              </span>
-                              <Button
-                                variant="outline"
-                                size="icon"
-                                className="h-8 w-8"
-                                onClick={() =>
-                                  updateQuantity(item.id, item.quantity + 1)
-                                }
-                              >
-                                <Plus className="h-3 w-3" />
-                              </Button>
-                            </div>
+                            <QuantityControls
+                              quantity={item.quantity}
+                              isMinusDisabled={item.quantity <= 1}
+                              onMinusClick={() =>
+                                updateQuantity(item.id, item.quantity - 1)
+                              }
+                              onPlusClick={() =>
+                                updateQuantity(item.id, item.quantity + 1)
+                              }
+                            />
                           </div>
                         </div>
                       </div>

@@ -28,11 +28,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     <Link href={`/product/${product.id}`}>
       <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col">
         <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-muted to-muted/50">
-          <ProductImage
-            src={product.image}
-            alt={product.title}
-            className={`object-cover group-hover:scale-105 transition-transform duration-300`}
-          />
+          <ProductImage src={product.image} alt={product.title} />
           <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
           <Badge className="absolute top-3 left-3 z-10">
             {product.category}
