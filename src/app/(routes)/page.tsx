@@ -15,7 +15,6 @@ export default async function HomePage({
   return (
     <div className="min-h-screen">
       <div className="flex flex-col lg:flex-row gap-8">
-        {/* Sidebar with Filters */}
         <div className="lg:w-1/4">
           <div className="sticky top-24">
             <FilterSidebar />

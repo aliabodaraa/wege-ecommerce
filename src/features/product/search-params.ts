@@ -57,8 +57,10 @@ export type ParsedSearchParams = Awaited<
   ReturnType<typeof searchParamsCache.parse>
 >;
 
-export const buildProductQuery = (params: ParsedSearchParams) => {
+export const buildProductQuery = (params?: ParsedSearchParams) => {
   const queryParams = new URLSearchParams();
+
+  if (!params) return "";
 
   if (params.search) {
     queryParams.append("search", params.search);

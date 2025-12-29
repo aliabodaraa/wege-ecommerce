@@ -4,8 +4,8 @@ import {
 } from "@/features/product/search-params";
 import { Product } from "@/lib/types/product";
 
-export async function fetchProducts(
-  searchParams: ParsedSearchParams
+export async function getProducts(
+  searchParams?: ParsedSearchParams
 ): Promise<Product[]> {
   const params = buildProductQuery(searchParams);
   const url = `${process.env.NEXT_PUBLIC_API_URL}/api/products${

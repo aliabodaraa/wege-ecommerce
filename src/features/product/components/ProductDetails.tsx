@@ -1,6 +1,5 @@
 "use client";
 
-import { Product } from "@/features/product/types/product";
 import { Star, Truck, Shield, ArrowLeft, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -9,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCartStore } from "@/lib/store/cartStore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Product } from "@/lib/types/product";
 
 interface ProductDetailsProps {
   product: Product;

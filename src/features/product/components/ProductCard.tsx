@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import { Product } from "@/features/product/types/product";
 import { Star, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useCartStore } from "@/lib/store/cartStore";
+import { Product } from "@/lib/types/product";
 
 interface ProductCardProps {
   product: Product;

@@ -1,6 +1,6 @@
 import { ParsedSearchParams } from "@/features/product/search-params";
 import ProductCard from "./ProductCard";
-import { fetchProducts } from "@/features/product/queries/get-products";
+import { getProducts } from "@/features/product/queries/get-products";
 import NoProductFound from "@/features/product/components/NoProductFound";
 
 interface ProductGridProps {
@@ -8,7 +8,7 @@ interface ProductGridProps {
 }
 
 export default async function ProductGrid({ searchParams }: ProductGridProps) {
-  const products = await fetchProducts(searchParams);
+  const products = await getProducts(searchParams);
   if (products.length === 0) {
     return <NoProductFound />;
   }
