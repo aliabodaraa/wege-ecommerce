@@ -11,6 +11,7 @@ import {
   searchParser,
 } from "@/features/product/search-params";
 import { ProductsWithMetadata } from "../types";
+import { useProductFilters } from "@/hooks/useProductFilters";
 
 type ProductsPaginationProps = {
   paginatedProductsMetadata: PaginatedData<ProductsWithMetadata>["metadata"];
@@ -23,16 +24,22 @@ const ProductsPagination = ({
     paginationParser,
     paginationOptions
   );
+  const { filters } = useProductFilters();
 
-  const [search] = useQueryState("search", searchParser);
-  const prevSearch = useRef(search);
+  const prevFilters = useRef(filters);
 
   useEffect(() => {
-    if (search === prevSearch.current) return;
-    prevSearch.current = search;
+    const hasFilterChanged =
+      prevFilters.current.category !== filters.category ||
+      prevFilters.current.minPrice !== filters.minPrice ||
+      prevFilters.current.maxPrice !== filters.maxPrice;
 
-    setPagination({ ...pagination, page: 0 });
-  }, [search, pagination, setPagination]);
+    if (hasFilterChanged) {
+      setPagination({ ...pagination, page: 0 });
+    }
+
+    prevFilters.current = filters;
+  }, [filters, setPagination]);
 
   return (
     <Pagination

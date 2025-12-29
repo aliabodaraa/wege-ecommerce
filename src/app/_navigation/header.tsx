@@ -8,8 +8,6 @@ import { homePath } from "@/paths";
 import { useState, useEffect } from "react";
 import { CartStore, useCartStore } from "@/lib/store/cartStore";
 import CartSidebar from "@/features/cart/components/CartSidebar";
-import Search from "@/features/product/components/Search";
-import { Suspense } from "react";
 const Header = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -22,9 +20,6 @@ const Header = () => {
 
   const navItems = (
     <>
-      <Suspense>
-        <Search />
-      </Suspense>
       <Button
         aria-label="Open cart"
         variant="outline"

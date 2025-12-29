@@ -5,6 +5,8 @@ import { ProductsWithMetadata } from "../types";
 import { ProductsPagination } from "./ProductsPagination";
 import ProductCard from "./ProductCard";
 import { Separator } from "@radix-ui/react-separator";
+import Search from "./Search";
+import { Suspense } from "react";
 
 interface ProductGridProps {
   searchParams: ParsedSearchParams;
@@ -30,10 +32,13 @@ export default async function ProductGrid({ searchParams }: ProductGridProps) {
   const paginatedProducts = products.slice(skip, skip + take);
   return (
     <>
-      <div className="mb-4">
+      <div className="mb-4 flex justify-between w-full items-center">
         <p className="text-sm text-muted-foreground">
           Showing {products.length} product{products.length !== 1 ? "s" : ""}
         </p>
+        <Suspense>
+          <Search />
+        </Suspense>
       </div>
       <ProductsPagination paginatedProductsMetadata={ProductsMetadata} />
       <Separator className="py-3" />
