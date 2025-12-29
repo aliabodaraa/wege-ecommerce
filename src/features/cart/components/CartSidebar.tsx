@@ -73,6 +73,7 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                   <Card key={item.id} className="overflow-hidden">
                     <CardContent className="p-4">
                       <div className="flex gap-4">
+                        {/* Product Image */}
                         <div className="flex-shrink-0">
                           <div className="h-20 w-20 rounded-md bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center">
                             <span className="text-xs text-muted-foreground">
@@ -81,6 +82,7 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                           </div>
                         </div>
 
+                        {/* Product Details */}
                         <div className="flex flex-1 flex-col min-w-0">
                           <div className="flex justify-between">
                             <div className="min-w-0">
@@ -106,6 +108,7 @@ export default function CartSidebar({ isOpen, onClose }: CartSidebarProps) {
                               ${item.price.toFixed(2)}
                             </p>
 
+                            {/* Quantity Controls */}
                             <div className="flex items-center gap-2">
                               <Button
                                 variant="outline"

@@ -57,6 +57,44 @@ export type ParsedSearchParams = Awaited<
   ReturnType<typeof searchParamsCache.parse>
 >;
 
+export const buildProductQuery = (params: ParsedSearchParams) => {
+  const queryParams = new URLSearchParams();
+
+  if (params.search) {
+    queryParams.append("search", params.search);
+  }
+
+  if (params.category && params.category !== "All") {
+    queryParams.append("category", params.category);
+  }
+
+  if (params.minPrice && params.minPrice > 0) {
+    queryParams.append("minPrice", params.minPrice.toString());
+  }
+
+  if (params.maxPrice && params.maxPrice < 5000) {
+    queryParams.append("maxPrice", params.maxPrice.toString());
+  }
+
+  if (params.page && params.page > 0) {
+    queryParams.append("page", (params.page + 1).toString());
+  }
+
+  if (params.size && params.size !== 12) {
+    queryParams.append("limit", params.size.toString());
+  }
+
+  if (params.sortKey && params.sortKey !== "createdAt") {
+    queryParams.append("sortBy", params.sortKey);
+  }
+
+  if (params.sortValue && params.sortValue !== "desc") {
+    queryParams.append("sortOrder", params.sortValue);
+  }
+
+  return queryParams;
+};
+
 export const CATEGORIES = [
   "All",
   "Electronics",
@@ -103,3 +141,8 @@ export const SORT_OPTIONS = [
   },
   { value: "name:asc", label: "Name A-Z", sortKey: "name", sortValue: "asc" },
 ] as const;
+
+export const getPriceRangeLabel = (min: number, max: number) => {
+  const range = PRICE_RANGES.find((r) => r.min === min && r.max === max);
+  return range ? range.label : `$${min} - $${max}`;
+};
