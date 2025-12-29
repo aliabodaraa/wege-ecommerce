@@ -4,21 +4,27 @@ import { Search as SearchIcon, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useProductFilters } from "@/hooks/useProductFilters";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useDebouncedCallback } from "use-debounce";
 
 export default function Search() {
   const { filters, updateSearch } = useProductFilters();
   const [inputValue, setInputValue] = useState(filters.search || "");
+  const [isComposing, setIsComposing] = useState(false);
 
   const debouncedUpdateSearch = useDebouncedCallback((value: string) => {
     updateSearch(value);
-  });
+  }, 400);
 
-  const handleInputChange = (value: string) => {
-    setInputValue(value);
-    debouncedUpdateSearch(value);
-  };
+  const handleInputChange = useCallback(
+    (value: string) => {
+      setInputValue(value);
+      if (!isComposing) {
+        debouncedUpdateSearch(value);
+      }
+    },
+    [debouncedUpdateSearch, isComposing]
+  );
 
   useEffect(() => {
     setInputValue(filters.search || "");
@@ -27,7 +33,7 @@ export default function Search() {
   const clearSearch = () => {
     setInputValue("");
     updateSearch("");
-    debouncedUpdateSearch.cancel();
+    debouncedUpdateSearch.flush();
   };
 
   return (
@@ -39,6 +45,8 @@ export default function Search() {
         className="pl-10 pr-10"
         value={inputValue}
         onChange={(e) => handleInputChange(e.target.value)}
+        onCompositionStart={() => setIsComposing(true)}
+        onCompositionEnd={() => setIsComposing(false)}
         aria-label="Search products"
       />
       {inputValue && (

@@ -14,9 +14,7 @@ interface ProductGridProps {
 
 export default async function ProductGrid({ searchParams }: ProductGridProps) {
   const products = await getProducts(searchParams);
-  if (products.length === 0) {
-    return <NoProductFound />;
-  }
+
   const count = products.length;
   const skip = searchParams.size * searchParams.page;
   const take = Math.min(searchParams.size, 100);
@@ -40,13 +38,20 @@ export default async function ProductGrid({ searchParams }: ProductGridProps) {
           <Search />
         </Suspense>
       </div>
-      <ProductsPagination paginatedProductsMetadata={ProductsMetadata} />
-      <Separator className="py-3" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {paginatedProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+
+      {products.length ? (
+        <>
+          <ProductsPagination paginatedProductsMetadata={ProductsMetadata} />
+          <Separator className="py-3" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {paginatedProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </>
+      ) : (
+        <NoProductFound />
+      )}
     </>
   );
 }
