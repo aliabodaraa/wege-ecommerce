@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import products from "@/lib/data/products.json";
 import { searchParamsCache } from "@/features/product/search-params";
+import { headers, makeRandomDelay } from "@/lib/api";
 
 export async function GET(request: Request) {
+  await makeRandomDelay();
+
   const { searchParams } = new URL(request.url);
   const untypedSearchParams = Object.fromEntries(searchParams);
   const typedSearchParams = searchParamsCache.parse(untypedSearchParams);
@@ -41,10 +44,6 @@ export async function GET(request: Request) {
         product.category.toLowerCase().includes(searchLower)
     );
   }
-  const headers = new Headers({
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization",
-  });
+
   return NextResponse.json(filteredProducts, { headers });
 }
