@@ -8,9 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "lint-fix": "next lint --fix",
-    "type": "tsc --noEmit",
-    "postinstall": "prisma generate",
-    "prisma-seed": "tsx prisma/seed.ts"
+    "type": "tsc --noEmit"
   },
   "dependencies": {
     "@node-rs/argon2": "^2.0.0",
