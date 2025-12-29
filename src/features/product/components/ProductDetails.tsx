@@ -1,15 +1,16 @@
 "use client";
 
-import { Star, Truck, Shield, ArrowLeft, Heart } from "lucide-react";
+import { Star, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCartStore } from "@/lib/store/cartStore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Product } from "@/lib/types/product";
 import { ProductImage } from "./ui/ProductImage";
+import { categoryPath, homePath } from "@/paths";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 interface ProductDetailsProps {
   product: Product;
@@ -34,26 +35,14 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
 
   return (
     <div className="max-w-7xl mx-auto">
-      {/* Breadcrumb */}
       <div className="mb-6">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => router.back()}
-          className="mb-4"
-        >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Products
-        </Button>
-        <nav className="text-sm text-muted-foreground">
-          <span>Home</span>
-          <span className="mx-2">/</span>
-          <span>Products</span>
-          <span className="mx-2">/</span>
-          <span>{product.category}</span>
-          <span className="mx-2">/</span>
-          <span className="text-foreground font-medium">{product.title}</span>
-        </nav>
+        <Breadcrumbs
+          breadcrumbs={[
+            { title: "products", href: homePath() },
+            { title: product.category, href: categoryPath(product.category) },
+            { title: product.title },
+          ]}
+        />
       </div>
 
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
@@ -110,7 +99,6 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
 
           <Separator className="my-6" />
 
-          {/* Quantity & Actions */}
           <div className="mb-8">
             <div className="flex items-center gap-4 mb-6">
               <div className="flex items-center gap-2">
@@ -151,100 +139,6 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
               </Button>
             </div>
           </div>
-
-          {/* Features */}
-          <div className="grid grid-cols-2 gap-4 mb-8">
-            <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
-              <div className="p-2 bg-background rounded">
-                <Truck className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="font-medium">Free Shipping</p>
-                <p className="text-sm text-muted-foreground">
-                  On orders over $50
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
-              <div className="p-2 bg-background rounded">
-                <Shield className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="font-medium">30-Day Returns</p>
-                <p className="text-sm text-muted-foreground">
-                  Easy return policy
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Specifications */}
-          <Tabs defaultValue="description" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="description">Description</TabsTrigger>
-              <TabsTrigger value="specs">Specifications</TabsTrigger>
-              <TabsTrigger value="reviews">Reviews</TabsTrigger>
-            </TabsList>
-            <TabsContent value="description" className="p-4">
-              <p>{product.description}</p>
-              <p className="mt-4">
-                This product is carefully crafted with premium materials to
-                ensure longevity and customer satisfaction. Each item undergoes
-                quality checks before shipping.
-              </p>
-            </TabsContent>
-            <TabsContent value="specs" className="p-4">
-              <div className="space-y-2">
-                <div className="flex justify-between border-b pb-2">
-                  <span className="text-muted-foreground">Category</span>
-                  <span className="font-medium">{product.category}</span>
-                </div>
-                <div className="flex justify-between border-b pb-2">
-                  <span className="text-muted-foreground">Rating</span>
-                  <span className="font-medium">{product.rating.rate}/5</span>
-                </div>
-                <div className="flex justify-between border-b pb-2">
-                  <span className="text-muted-foreground">Reviews</span>
-                  <span className="font-medium">{product.rating.count}</span>
-                </div>
-              </div>
-            </TabsContent>
-            <TabsContent value="reviews" className="p-4">
-              <div className="space-y-4">
-                {[1, 2, 3].map((review) => (
-                  <div key={review} className="border rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center">
-                        <div className="w-10 h-10 rounded-full bg-muted mr-3"></div>
-                        <div>
-                          <p className="font-medium">Customer {review}</p>
-                          <div className="flex items-center">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`h-4 w-4 ${
-                                  i < 4
-                                    ? "text-yellow-500 fill-current"
-                                    : "text-muted-foreground"
-                                }`}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                      <span className="text-sm text-muted-foreground">
-                        2 days ago
-                      </span>
-                    </div>
-                    <p>
-                      Great product! Exactly as described. Would recommend to
-                      others.
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
         </div>
       </div>
     </div>
