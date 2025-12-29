@@ -16,7 +16,7 @@ export default async function HomePage({
     <div className="min-h-screen">
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="lg:w-1/4">
-          <div className="sticky top-24">
+          <div className="sticky">
             <FilterSidebar />
           </div>
         </div>

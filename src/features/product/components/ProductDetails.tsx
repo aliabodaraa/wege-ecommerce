@@ -9,6 +9,7 @@ import { useCartStore } from "@/lib/store/cartStore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Product } from "@/lib/types/product";
+import { ProductImage } from "./ui/ProductImage";
 
 interface ProductDetailsProps {
   product: Product;
@@ -56,31 +57,14 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
       </div>
 
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-        {/* Product Image */}
         <div>
-          <div className="aspect-square rounded-2xl bg-gradient-to-br from-muted to-muted/50 overflow-hidden mb-4">
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="text-center">
-                <span className="text-2xl mb-2 block">📷</span>
-                <span className="text-muted-foreground">Product Image</span>
-              </div>
-            </div>
-          </div>
-          <div className="grid grid-cols-4 gap-2">
-            {[1, 2, 3, 4].map((num) => (
-              <div
-                key={num}
-                className="aspect-square rounded-lg bg-muted/50 border flex items-center justify-center cursor-pointer hover:border-primary"
-              >
-                <span className="text-sm text-muted-foreground">
-                  Thumb {num}
-                </span>
-              </div>
-            ))}
-          </div>
+          <ProductImage
+            src={product.image}
+            alt={product.title}
+            className={`object-cover group-hover:scale-105 transition-transform duration-300`}
+          />
         </div>
 
-        {/* Product Info */}
         <div>
           <div className="flex items-start justify-between mb-4">
             <div>

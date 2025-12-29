@@ -1,11 +1,16 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { Star, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useCartStore } from "@/lib/store/cartStore";
 import { Product } from "@/lib/types/product";
+import { useState } from "react";
+import { customLoader } from "@/lib/image-loader";
+import ProductImageFallback from "./ui/product-image-fallback";
+import { ProductImage } from "./ui/ProductImage";
 
 interface ProductCardProps {
   product: Product;
@@ -19,20 +24,24 @@ export default function ProductCard({ product }: ProductCardProps) {
     e.stopPropagation();
     addItem(product);
   };
-
   return (
     <Link href={`/product/${product.id}`}>
       <Card className="group overflow-hidden hover:shadow-lg transition-all duration-300 h-full flex flex-col">
         <div className="aspect-square relative overflow-hidden bg-gradient-to-br from-muted to-muted/50">
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-muted-foreground text-sm">Product Image</span>
-          </div>
-          <Badge className="absolute top-3 left-3">{product.category}</Badge>
-          <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+          <ProductImage
+            src={product.image}
+            alt={product.title}
+            className={`object-cover group-hover:scale-105 transition-transform duration-300`}
+          />
+          <div className="absolute inset-0 bg-black/5 group-hover:bg-transparent transition-colors" />
+          <Badge className="absolute top-3 left-3 z-10">
+            {product.category}
+          </Badge>
+          <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity z-10">
             <Button
               size="sm"
               variant="secondary"
-              className="shadow-md"
+              className="shadow-md bg-background/90 backdrop-blur-sm"
               onClick={handleAddToCart}
             >
               <ShoppingCart className="h-4 w-4 mr-1" />
