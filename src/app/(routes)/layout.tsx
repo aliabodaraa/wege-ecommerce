@@ -18,8 +18,13 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "The Road to Next",
-  description: "My Road to Next application ...",
+  title: "WEGE - E-commerce Demo",
+  description: "Modern e-commerce app with filters & search",
+  authors: [
+    { name: "WEGE Company" },
+    { name: "Ali Abodaraa", url: "https://github.com/aliabodaraa" },
+  ],
+  creator: "Ali Abodaraa",
 };
 
 export default function RootLayout({
@@ -29,6 +34,27 @@ export default function RootLayout({
 }>) {
   return (
     <html suppressHydrationWarning lang="en">
+      <head>
+        <meta property="og:title" content="WEGE - E-commerce Demo" />
+        <meta
+          property="og:description"
+          content="Modern e-commerce app with filters & search"
+        />
+        <meta property="og:image" content="/images/shopping.png" />
+        <meta
+          property="og:url"
+          content="https://wege-ecommerce-brown.vercel.app"
+        />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="WEGE - E-commerce Demo" />
+        <meta
+          name="twitter:description"
+          content="Modern e-commerce app with filters & search"
+        />
+        <meta name="twitter:image" content="/images/shopping.png" />
+        <link rel="icon" href="/images/shopping.png" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
