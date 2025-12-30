@@ -1,4 +1,4 @@
-export default function ProductGridSkeleton() {
+const ProductGridSkeleton = () => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {Array.from({ length: 6 }).map((_, index) => (
@@ -20,4 +20,25 @@ export default function ProductGridSkeleton() {
       ))}
     </div>
   );
-}
+};
+const ProductHeaaderSkeleton = ({
+  rightWidth = 20,
+  leftWidth = 20,
+}: {
+  rightWidth?: number;
+  leftWidth?: number;
+}) => {
+  return (
+    <div className="flex justify-between mb-4">
+      <div
+        className="h-8 bg-muted rounded"
+        style={{ width: `${leftWidth}%` }}
+      ></div>
+      <div
+        className="h-8 bg-muted rounded"
+        style={{ width: `${rightWidth}%` }}
+      ></div>
+    </div>
+  );
+};
+export { ProductGridSkeleton, ProductHeaaderSkeleton };

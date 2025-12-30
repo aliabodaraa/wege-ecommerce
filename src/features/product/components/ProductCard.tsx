@@ -1,15 +1,11 @@
 "use client";
 import Link from "next/link";
-import Image from "next/image";
 import { Star, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useCartStore } from "@/lib/store/cartStore";
 import { Product } from "@/lib/types/product";
-import { useState } from "react";
-import { customLoader } from "@/lib/image-loader";
-import ProductImageFallback from "./ui/product-image-fallback";
 import { ProductImage } from "./ui/ProductImage";
 
 interface ProductCardProps {
@@ -20,7 +16,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem);
 
   const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault(); // Don't navigate to product page
+    e.preventDefault();
     e.stopPropagation();
     addItem(product);
   };
