@@ -1,27 +1,12 @@
 export default function ProductDetailsSkeleton() {
   return (
-    <div className="max-w-7xl mx-auto animate-pulse">
-      {/* Breadcrumb */}
-      <div className="mb-6">
-        <div className="h-4 bg-muted rounded w-1/4 mb-4"></div>
-        <div className="h-3 bg-muted rounded w-1/2"></div>
-      </div>
-
+    <div className="w-full mx-auto animate-pulse">
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-        {/* Image Skeleton */}
         <div>
           <div className="aspect-square rounded-2xl bg-muted mb-4"></div>
-          <div className="grid grid-cols-4 gap-2">
-            {[1, 2, 3, 4].map((num) => (
-              <div
-                key={num}
-                className="aspect-square rounded-lg bg-muted"
-              ></div>
-            ))}
-          </div>
+          <div className="grid grid-cols-4 gap-2"></div>
         </div>
 
-        {/* Info Skeleton */}
         <div>
           <div className="mb-4">
             <div className="h-6 bg-muted rounded w-1/4 mb-2"></div>
@@ -40,7 +25,6 @@ export default function ProductDetailsSkeleton() {
 
           <div className="h-px bg-muted my-6"></div>
 
-          {/* Quantity Skeleton */}
           <div className="mb-8">
             <div className="h-6 bg-muted rounded w-1/4 mb-4"></div>
             <div className="flex gap-4 mb-6">
@@ -52,14 +36,12 @@ export default function ProductDetailsSkeleton() {
             </div>
           </div>
 
-          {/* Features Skeleton */}
           <div className="grid grid-cols-2 gap-4 mb-8">
             {[1, 2].map((num) => (
               <div key={num} className="h-16 bg-muted rounded-lg"></div>
             ))}
           </div>
 
-          {/* Tabs Skeleton */}
           <div className="space-y-4">
             <div className="h-10 bg-muted rounded-lg w-full"></div>
             <div className="h-32 bg-muted rounded-lg"></div>

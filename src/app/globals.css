@@ -4,6 +4,12 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--primary)) hsl(var(--background));
 }
 
 @layer base {

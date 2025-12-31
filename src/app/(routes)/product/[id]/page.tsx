@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import ProductDetailsSkeleton from "@/features/product/components/ProductDetailsSkeleton";
 import { getProduct } from "@/features/product/queries/get-product";
 import { getProducts } from "@/features/product/queries/get-products";
+import { makeRandomDelay } from "@/lib/api";
 
 export async function generateStaticParams() {
   const products = await getProducts();
@@ -26,10 +27,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   return (
-    <div className="min-h-screen">
-      <Suspense fallback={<ProductDetailsSkeleton />}>
-        <ProductDetails product={product} />
-      </Suspense>
+    <div className="h-auto w-auto">
+      <ProductDetails product={product} />
     </div>
   );
 }
